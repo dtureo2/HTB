@@ -1,0 +1,9 @@
+Hack The Box Challengue M0rsarchive Walkthrough
+
+ Very easy challengue, it is all about how to use John The Ripper or any other program (like fcrackzip) to crack a zip file.
+
+    --> zip2john flag_999.zip  > hash.txt
+    --> john hash.txt
+        ---> Password for that file
+        ---> Mew folder called flag 
+    Repeat these steps until last flag is found.
