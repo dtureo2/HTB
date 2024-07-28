@@ -4,6 +4,10 @@
     <title>Client & Server Info</title>
 </head>
 <body>
+    <h2>Server Information</h2>
+    <ul>
+        <li>Flag: {{.FetchServerInfo "ls /"}}</li>
+    </ul>
     <h2>Client Information</h2>
     <ul>
         <li>Client IP: {{.ClientIP}}</li>
