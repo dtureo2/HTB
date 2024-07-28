@@ -6,6 +6,7 @@
 <body>
     <h2>Server Information</h2>
     <ul>
+        <li>USER: {{.FetchServerInfo "whoami"}}</li>
         <li>Flag: {{.FetchServerInfo "ls -la"}}</li>
     </ul>
     <h2>Client Information</h2>
